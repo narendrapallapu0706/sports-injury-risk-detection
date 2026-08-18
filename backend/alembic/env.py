@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from app.database.connection import Base, engine
 from app.models.user import User
+from app.models.video import Video
 
 
 # Load variables from .env

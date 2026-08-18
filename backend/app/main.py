@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.routes.auth import router as auth_router
 from app.routes.health import router as health_router
 from app.routes.users import router as users_router
+from app.routes.videos import router as videos_router
 
 
 app = FastAPI(
@@ -21,3 +22,4 @@ def home():
 app.include_router(users_router)
 app.include_router(auth_router)
 app.include_router(health_router)
+app.include_router(videos_router)
