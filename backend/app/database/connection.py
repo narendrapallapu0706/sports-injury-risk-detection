@@ -1,4 +1,5 @@
 import os
+from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
@@ -19,9 +20,13 @@ if not all([DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME]):
     raise RuntimeError("Database environment variables are not fully configured")
 
 
+# Encode special characters in the database password
+encoded_password = quote_plus(DB_PASSWORD)
+
+
 DATABASE_URL = (
     f"postgresql+psycopg://"
-    f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    f"{DB_USER}:{encoded_password}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
 
