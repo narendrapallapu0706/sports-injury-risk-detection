@@ -162,8 +162,6 @@ The primary target column is:
 
 
 
-```text
-
 InjDefn
 
 
