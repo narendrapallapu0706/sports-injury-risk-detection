@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import Any
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy import DateTime, ForeignKey, Integer, String, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.connection import Base
@@ -41,6 +42,16 @@ class Video(Base):
         String(30),
         nullable=False,
         default="uploaded",
+    )
+
+    frames_processed: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True,
+    )
+
+    analysis_features: Mapped[dict[str, Any] | None] = mapped_column(
+        JSON,
+        nullable=True,
     )
 
     created_at: Mapped[datetime] = mapped_column(

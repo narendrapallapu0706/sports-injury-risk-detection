@@ -198,8 +198,11 @@ def analyze_video(
             fps,
         )
 
-        # 3. Mark analysis as completed.
+        # 3. Store analysis results permanently in the database.
+        video.frames_processed = len(frame_results)
+        video.analysis_features = features
         video.status = "completed"
+
         db.commit()
         db.refresh(video)
 
@@ -207,8 +210,8 @@ def analyze_video(
             "message": "Video analysis completed",
             "video_id": video.id,
             "status": video.status,
-            "frames_processed": len(frame_results),
-            "features": features,
+            "frames_processed": video.frames_processed,
+            "features": video.analysis_features,
         }
 
     except Exception as exc:
