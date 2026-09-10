@@ -5,7 +5,10 @@ import './App.css'
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => Boolean(localStorage.getItem('access_token'))
+  )
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true)
@@ -18,83 +21,119 @@ function App() {
     setShowLogin(false)
   }
 
-if (isLoggedIn) {
-  return (
-    <Dashboard
-      onLogout={handleLogout}
-    />
-  )
-}
-
-  if (showLogin && !isLoggedIn) {
+  /*
+   * Logged-in users see the complete sports injury
+   * analysis dashboard.
+   */
+  if (isLoggedIn) {
     return (
-      <div className="app">
+      <Dashboard onLogout={handleLogout} />
+    )
+  }
+
+  /*
+   * Login screen
+   */
+  if (showLogin) {
+    return (
+      <div className="app auth-app">
         <header className="navbar">
-          <h2>Sports Injury Risk Detection</h2>
+
+          <div className="brand">
+            <div className="brand-icon">🏃</div>
+
+            <div>
+              <h2>Sports Injury</h2>
+              <span>Risk Detection</span>
+            </div>
+          </div>
 
           <button
             className="secondary-button"
             onClick={() => setShowLogin(false)}
           >
-            Back
+            ← Back
           </button>
+
         </header>
 
-        <Login onLoginSuccess={handleLoginSuccess} />
+        <Login
+          onLoginSuccess={handleLoginSuccess}
+        />
       </div>
     )
   }
 
+  /*
+   * Public landing page
+   */
   return (
-    <div className="app">
+    <div className="app landing-page">
+
       <header className="navbar">
-        <h2>Sports Injury Risk Detection</h2>
+
+        <div className="brand">
+          <div className="brand-icon">🏃</div>
+
+          <div>
+            <h2>Sports Injury</h2>
+            <span>Risk Detection</span>
+          </div>
+        </div>
 
         <nav>
           <a href="#home">Home</a>
-          <a href="#about">About</a>
 
-          {isLoggedIn ? (
-            <button
-              className="nav-button"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          ) : (
-            <button
-              className="nav-button"
-              onClick={() => setShowLogin(true)}
-            >
-              Login
-            </button>
-          )}
+          <a href="#about">
+            How It Works
+          </a>
+
+          <button
+            className="nav-login-button"
+            onClick={() => setShowLogin(true)}
+          >
+            Login
+          </button>
         </nav>
+
       </header>
 
       <main>
-        <section id="home" className="hero-section">
+
+        {/* HERO */}
+
+        <section
+          id="home"
+          className="hero-section"
+        >
           <div className="hero-content">
-            <p className="tagline">AI-Powered Sports Safety</p>
+
+            <div className="hero-badge">
+              ✦ AI-POWERED SPORTS SAFETY
+            </div>
 
             <h1>
-              Detect Movement Risks
+              Analyze Your Movement.
               <br />
-              Before Injury Happens
+
+              <span>
+                Detect Risk Before Injury.
+              </span>
             </h1>
 
             <p className="description">
-              Analyze athlete movement videos using AI and biomechanical
-              analysis to identify abnormal movement patterns and potential
-              injury risks.
+              Upload your athlete training video and get
+              AI-powered movement analysis, pose estimation,
+              biomechanical features and injury risk assessment.
             </p>
 
             <div className="hero-buttons">
+
               <button
                 className="primary-button"
                 onClick={() => setShowLogin(true)}
               >
-                Get Started
+                ☁ Upload New Video
               </button>
 
               <button
@@ -102,81 +141,238 @@ if (isLoggedIn) {
                 onClick={() =>
                   document
                     .getElementById('about')
-                    ?.scrollIntoView({ behavior: 'smooth' })
+                    ?.scrollIntoView({
+                      behavior: 'smooth',
+                    })
                 }
               >
-                Learn More
+                Learn More →
               </button>
+
             </div>
+
+            <div className="hero-stats">
+
+              <div>
+                <strong>AI</strong>
+                <span>Powered Analysis</span>
+              </div>
+
+              <div>
+                <strong>Pose</strong>
+                <span>Estimation</span>
+              </div>
+
+              <div>
+                <strong>ML</strong>
+                <span>Risk Prediction</span>
+              </div>
+
+            </div>
+
           </div>
         </section>
 
-        <section id="about" className="about-section">
-          <h2>How It Works</h2>
 
-          <div className="features">
-            <div className="feature-card">
-              <h3>1. Upload Video</h3>
-              <p>
-                Upload an athlete movement video for analysis.
-              </p>
-            </div>
+        {/* HOW IT WORKS */}
 
-            <div className="feature-card">
-              <h3>2. AI Analysis</h3>
-              <p>
-                Analyze body movement and biomechanical patterns.
-              </p>
-            </div>
+        <section
+          id="about"
+          className="about-section"
+        >
 
-            <div className="feature-card">
-              <h3>3. Risk Assessment</h3>
-              <p>
-                Identify potential injury risk factors and abnormal
-                movement patterns.
-              </p>
-            </div>
-          </div>
-        </section>
+          <div className="section-heading">
 
-        {!isLoggedIn && (
-          <section id="login" className="login-section">
-            <h2>Get Started</h2>
+            <span>
+              ✦ SYSTEM WORKFLOW
+            </span>
+
+            <h2>
+              From Video to Risk Assessment
+            </h2>
 
             <p>
-              Login to upload and analyze your athlete videos.
+              Our system combines computer vision,
+              biomechanical feature extraction and
+              machine learning.
             </p>
+
+          </div>
+
+
+          <div className="features">
+
+            <div className="feature-card">
+
+              <div className="feature-number">
+                01
+              </div>
+
+              <div className="feature-icon">
+                ☁
+              </div>
+
+              <h3>
+                Upload Video
+              </h3>
+
+              <p>
+                Upload an athlete training or movement
+                video for analysis.
+              </p>
+
+            </div>
+
+
+            <div className="feature-card">
+
+              <div className="feature-number">
+                02
+              </div>
+
+              <div className="feature-icon">
+                ◉
+              </div>
+
+              <h3>
+                Pose Detection
+              </h3>
+
+              <p>
+                MediaPipe detects body landmarks from
+                the athlete's movement.
+              </p>
+
+            </div>
+
+
+            <div className="feature-card">
+
+              <div className="feature-number">
+                03
+              </div>
+
+              <div className="feature-icon">
+                ◈
+              </div>
+
+              <h3>
+                Feature Extraction
+              </h3>
+
+              <p>
+                Biomechanical and movement features are
+                extracted from the detected landmarks.
+              </p>
+
+            </div>
+
+
+            <div className="feature-card">
+
+              <div className="feature-number">
+                04
+              </div>
+
+              <div className="feature-icon">
+                ◇
+              </div>
+
+              <h3>
+                Risk Prediction
+              </h3>
+
+              <p>
+                The machine learning model estimates
+                the athlete's injury risk probability.
+              </p>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* SYSTEM CAPABILITIES */}
+
+        <section className="capabilities-section">
+
+          <div className="capability-content">
+
+            <span className="section-label">
+              ✦ AI POWERED
+            </span>
+
+            <h2>
+              Advanced Athlete
+              <br />
+              Movement Analysis
+            </h2>
+
+            <p>
+              The platform combines video processing,
+              pose estimation, biomechanical analysis
+              and machine learning to identify potential
+              movement-related injury risks.
+            </p>
+
+            <div className="capability-list">
+
+              <div>
+                <span>✓</span>
+                Video-based movement analysis
+              </div>
+
+              <div>
+                <span>✓</span>
+                MediaPipe pose estimation
+              </div>
+
+              <div>
+                <span>✓</span>
+                Biomechanical feature extraction
+              </div>
+
+              <div>
+                <span>✓</span>
+                Machine learning risk prediction
+              </div>
+
+            </div>
 
             <button
               className="primary-button"
               onClick={() => setShowLogin(true)}
             >
-              Login
+              Start Analysis →
             </button>
-          </section>
-        )}
 
-        {isLoggedIn && (
-          <section className="login-section">
-            <h2>Welcome!</h2>
+          </div>
 
-            <p>
-              You are successfully logged in.
-            </p>
+        </section>
 
-            <button
-              className="primary-button"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </section>
-        )}
       </main>
 
-      <footer>
-        <p>Sports Injury Risk Detection Platform</p>
+
+      {/* FOOTER */}
+
+      <footer className="landing-footer">
+
+        <div>
+          🛡 Sports Injury Risk Detection System
+        </div>
+
+        <div>
+          AI-Powered&nbsp; • &nbsp;Accurate&nbsp; • &nbsp;Reliable
+        </div>
+
+        <div>
+          © 2026 All rights reserved.
+        </div>
+
       </footer>
+
     </div>
   )
 }
