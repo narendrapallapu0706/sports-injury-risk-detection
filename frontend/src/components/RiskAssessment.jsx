@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 function RiskAssessment() {
   const [form, setForm] = useState({
     speed_r: 2.8,
@@ -49,7 +51,7 @@ function RiskAssessment() {
     setResult(null)
 
     try {
-      const response = await fetch('http://localhost:8000/predict', {
+      const response = await fetch(`${API_URL}/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
