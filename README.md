@@ -389,6 +389,8 @@ React localStorage
 
 Authenticated API Requests
 
+FastAPI interactive documentation:
+
 Protected video endpoints require:
 
 Authorization: Bearer <access_token>
@@ -408,10 +410,6 @@ GET /videos/ List user's videos
 GET /videos/{video_id} Get video details
 
 POST /videos/{video_id}/analyze Analyze athlete video
-
-FastAPI interactive documentation:
-
-http://localhost:8000/docs
 
 🛠️ Technology Stack
 
