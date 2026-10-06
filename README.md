@@ -1,7 +1,5 @@
 \# 🏃 Sports Injury Risk Detection
 
-
-
 An AI-powered sports injury risk detection platform that combines
 
 \*\*Machine Learning, Computer Vision, Pose Estimation, Biomechanical Analysis,
@@ -10,25 +8,15 @@ FastAPI, PostgreSQL, Docker, and React\*\* to analyze athlete information and
 
 movement videos.
 
-
-
 \---
 
-
-
 \## 🎯 Project Overview
-
-
 
 Sports injuries can occur because of abnormal movement patterns,
 
 joint asymmetry, excessive movement, or training-related factors.
 
-
-
 This project provides a platform that:
-
-
 
 \- Analyzes athlete running and demographic information
 
@@ -50,19 +38,11 @@ This project provides a platform that:
 
 > movement analysis. It is not a medical diagnosis system.
 
-
-
 \---
-
-
 
 \# ✨ Key Features
 
-
-
 \### 🤖 Machine Learning
-
-
 
 \- Binary injury-risk classification
 
